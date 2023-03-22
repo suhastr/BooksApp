@@ -18,7 +18,8 @@ class SearchResultsListView(ListView): # new
 	model = Book
 	context_object_name = "book_list"
 	template_name = "books/search_results.html"
-	queryset = Book.objects.filter(title__icontains="beginners") # new
+	#queryset = Book.objects.filter(title__icontains="beginners") # new
+	queryset = Book.objects.all().prefetch_related('reviews__author',) # new
 	
 	def get_queryset(self): # new
 		query = self.request.GET.get("q")
