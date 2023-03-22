@@ -186,7 +186,9 @@ AUTHENTICATION_BACKENDS = (
 "allauth.account.auth_backends.AuthenticationBackend",
 )
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend" # new
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # new
+
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend" # new
 
 ACCOUNT_SESSION_REMEMBER = True # new
 
