@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env # new
+
+env = Env() # new
+env.read_env() # new
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k7uu^!n6!n_i*epvk0&+xf0j5qm)y$pk@2fxc!er)@&$zvu)$l'
+SECRET_KEY = SECRET_KEY = env("DJANGO_SECRET_KEY") # 'django-insecure-k7uu^!n6!n_i*epvk0&+xf0j5qm)y$pk@2fxc!er)@&$zvu)$l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DEBUG = env.bool("DJANGO_DEBUG") # new
+ALLOWED_HOSTS = [".pythonanywhere.com", "localhost", "127.0.0.1"] # new
 
 ALLOWED_HOSTS = []
 
@@ -89,15 +94,19 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 #     }
 # }
 
+#DATABASES = {
+#"default": {
+#"ENGINE": "django.db.backends.postgresql",
+#"NAME": "postgres",
+#"USER": "postgres",
+#"PASSWORD": "postgres",
+#"HOST": "db",
+#"PORT": 5432,
+#}
+#}
 DATABASES = {
-"default": {
-"ENGINE": "django.db.backends.postgresql",
-"NAME": "postgres",
-"USER": "postgres",
-"PASSWORD": "postgres",
-"HOST": "db",
-"PORT": 5432,
-}
+"default": env.dj_db_url("DATABASE_URL",
+default="postgres://postgres@db/postgres")
 }
 
 
